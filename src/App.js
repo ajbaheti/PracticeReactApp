@@ -9,7 +9,8 @@ class App extends Component {
             { name: "Siddhant", age: 26 },
             { name: "Yash", age: 29 }
         ],
-        otherState: "this won't change"
+        otherState: "this won't change",
+        showPersons: false
     };
 
     switchNameHandler = (newName) => {
@@ -33,6 +34,11 @@ class App extends Component {
         });
     };
 
+    togglePersonHandler = () => {
+        const doesShow = this.state.showPersons;
+        this.setState({ showPersons: !doesShow });
+    };
+
     render() {
         const style = {
             backgroundColor: 'grey',
@@ -49,18 +55,26 @@ class App extends Component {
                 <p className="test">This is really working...!!!</p>
                 <button
                     style={style}
-                    onClick={() => this.switchNameHandler('AB')}>Switch Name</button>
-                <Person
-                    name={this.state.persons[0].name}
-                    age={this.state.persons[0].age} />
-                <Person
-                    name={this.state.persons[1].name}
-                    age={this.state.persons[1].age}
-                    click={this.switchNameHandler.bind(this, 'AB')}
-                    changed={this.nameChangedHandler}>My Hobbies: Numismatic</Person>
-                <Person
-                    name={this.state.persons[2].name}
-                    age={this.state.persons[2].age} />
+                    onClick={this.togglePersonHandler}>Toggle Persons</button>
+                {
+                    this.state.showPersons ?
+                        <div>
+                            <Person
+                                name={this.state.persons[0].name}
+                                age={this.state.persons[0].age}
+                            />
+                            <Person
+                                name={this.state.persons[1].name}
+                                age={this.state.persons[1].age}
+                                click={this.switchNameHandler.bind(this, 'AB')}
+                                changed={this.nameChangedHandler}>My Hobbies: Numismatic
+                            </Person>
+                            <Person
+                                name={this.state.persons[2].name}
+                                age={this.state.persons[2].age}
+                            />
+                        </div>  : null
+                }
             </div>
         );
     }
