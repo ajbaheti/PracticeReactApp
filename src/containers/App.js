@@ -9,6 +9,17 @@ class App extends Component {
     constructor(props){
         super(props);
         console.log('App.js Constructor');
+
+        this.state = {
+            persons: [
+                { id: "ljkgkg", name: "Ashish", age: 27 },
+                { id: "ldnf", name: "Siddhant", age: 26 },
+                { id: "kjsadfsa", name: "Yash", age: 29 }
+            ],
+            otherState: "this won't change",
+            showPersons: false,
+            toggleClicked: 0
+        };
     }
 
     componentWillMount(){
@@ -18,16 +29,6 @@ class App extends Component {
     componentDidMount(){
         console.log('App.js componentDidMount');
     }
-
-    state = {
-        persons: [
-            { id: "ljkgkg", name: "Ashish", age: 27 },
-            { id: "ldnf", name: "Siddhant", age: 26 },
-            { id: "kjsadfsa", name: "Yash", age: 29 }
-        ],
-        otherState: "this won't change",
-        showPersons: false
-    };
 
     deletePersonHandler = (personIndex) => {
         // const persons = this.state.persons.slice(); OR spread operator
@@ -55,7 +56,12 @@ class App extends Component {
 
     togglePersonHandler = () => {
         const doesShow = this.state.showPersons;
-        this.setState({ showPersons: !doesShow });
+        this.setState( (prevState, props) => {
+            return {
+                showPersons: !doesShow,
+                toggleClicked: prevState.toggleClicked + 1
+            }
+        });
     };
 
     render() {
